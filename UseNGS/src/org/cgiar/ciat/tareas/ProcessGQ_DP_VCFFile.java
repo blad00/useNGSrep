@@ -14,6 +14,10 @@ import net.sf.ngstools.variants.SNV;
 import net.sf.ngstools.variants.io.VCFFileReader;
 import net.sf.ngstools.variants.io.VCFRecord;
 
+/*
+ * Print distribution of GQ of a VCF file
+ */
+
 public class ProcessGQ_DP_VCFFile {
 	public static void main(String[] args) throws Exception {
 		String filename = args[0];
