@@ -87,28 +87,39 @@ public class SplitProfile {
 			for (String sample : group) {
 				locationsSample = sampleIds.indexOf(sample);
 				calledVar = callsVariant.get(locationsSample);
-				if(calledVar.isHomozygousReference())
-					totalHomoRef++;
-				if(calledVar.isHomozygous())
-					totalHomoAlt++;
+				if(!calledVar.isHeterozygous()){
+					if(calledVar.isHomozygousReference())
+						totalHomoRef++;
+					else
+						totalHomoAlt++;
+				}
 			}
 			
 			if(totalHomoRef == group.size() || totalHomoAlt == group.size()) {
+//				if(variant.getSequenceName().equals("10")&& variant.getFirst() == 29082283){
+//					System.out.println("check");
+//					System.out.println("checks");
+//				}
 				//if you are here is because the first group is all equal
 				for (String sample : leftGroup) {
 					locationsSample = sampleIds.indexOf(sample);
 					calledVar = callsVariant.get(locationsSample);
-					if(calledVar.isHomozygousReference())
-						totalLeftHomoRef++;
-					if(calledVar.isHomozygous())
-						totalLeftHomoAlt++;
+					if(!calledVar.isHeterozygous()){
+						if(calledVar.isHomozygousReference())
+							totalLeftHomoRef++;
+						else
+							totalLeftHomoAlt++;
+					}
 				}
 				
-				if(totalHomoRef == group.size() && totalLeftHomoAlt == leftGroup.size())
+				if(totalHomoRef == group.size() && totalLeftHomoAlt == leftGroup.size()){
 					outFile.println(variant.getSequenceName()+"\t"+variant.getFirst());
+				}else{
+					if(totalLeftHomoRef == leftGroup.size() && totalHomoAlt == group.size()){
+						outFile.println(variant.getSequenceName()+"\t"+variant.getFirst());
+					}	
+				}
 				
-				if(totalLeftHomoRef == group.size() && totalHomoAlt == leftGroup.size())
-					outFile.println(variant.getSequenceName()+"\t"+variant.getFirst());
 			}
 			
 			//reset counters
